@@ -1,10 +1,10 @@
 #!/bin/bash
 
-export GRINDER_PROCESSES=1
-export GRINDER_THREADS=1
+export GRINDER_PROCESSES=10
+export GRINDER_THREADS=10
 export GRINDER_USE_CONSOLE=false
 export GRINDER_CONSOLE_HOST=localhost
-export GRINDER_RUNS=1
+export GRINDER_RUNS=100
 
 TEST="./argus/pepd/test.properties"
 
