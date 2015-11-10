@@ -18,9 +18,7 @@ TESTID = 201
 def parallel_test(self):
     lRange = self.RangePermit.split(",")
     lResourceId = "%s%03d" % (self.ResourceId, int(lRange[0]))
-    lThreadId = grinder.threadNumber
-    idx = lThreadId % len(self.EndpointList)
-    lEndpoint = self.EndpointList[idx]
+    lEndpoint = get_endpoint(self, grinder.threadNumber)
     lMethodInfo = "parallel_test - resourceid=[%s] actionid=[%s] endpoint=[%s]" % (lResourceId, self.ActionId, lEndpoint)
     log.debug("START %s" % lMethodInfo)
     lPepClient = create_client(lEndpoint, self.CaDirname, self.ClientCert, self.ClientKey, self.ClientPasswd)

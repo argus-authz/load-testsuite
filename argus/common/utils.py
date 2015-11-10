@@ -27,6 +27,11 @@ def get_resource_id(self, lRange):
     lResourceId = "%s%03d" % (self.ResourceId, lRand)
     return lResourceId
 
+def get_endpoint(self, pThreadId):
+    idx = pThreadId % len(self.EndpointList)
+    lEndpoint = self.EndpointList[idx]
+    return lEndpoint
+
 def create_client(pEndpoint, pCaDirname, pClientCert, pClientKey, pClientPasswd):
     lMethodInfo = "create_client - endpoint=[%s] cert=[%s] key=[%s]" % (pEndpoint, pClientCert, pClientKey)
     log.debug("START %s" % lMethodInfo)
