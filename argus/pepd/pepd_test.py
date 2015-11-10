@@ -28,7 +28,9 @@ def do_test(pEndpoint, pCaDirname, pClientCert, pClientKey, pClientPasswd, pProx
 def test_permit(self):
     lRange = self.RangePermit.split(",")
     lResourceId = get_resource_id(self, lRange)
-    lEndpoint = self.EndpointList[0]
+    lThreadId = grinder.threadNumber
+    idx = lThreadId % len(self.EndpointList)
+    lEndpoint = self.EndpointList[idx]
     lMethodInfo = "test_permit - resourceid=[%s]" % lResourceId
     log.debug("START %s" % lMethodInfo)
     lResponse = do_test(lEndpoint, self.CaDirname, self.ClientCert, self.ClientKey, self.ClientPasswd, self.ProxyPath, lResourceId, self.ActionId)
@@ -40,7 +42,9 @@ def test_permit(self):
 def test_deny(self):
     lRange = self.RangeDeny.split(",")
     lResourceId = get_resource_id(self, lRange)
-    lEndpoint = self.EndpointList[0]
+    lThreadId = grinder.threadNumber
+    idx = lThreadId % len(self.EndpointList)
+    lEndpoint = self.EndpointList[idx]
     lMethodInfo = "test_deny - resourceid=[%s]" % lResourceId
     log.debug("START %s" % lMethodInfo)
     lResponse = do_test(lEndpoint, self.CaDirname, self.ClientCert, self.ClientKey, self.ClientPasswd, self.ProxyPath, lResourceId, self.ActionId)
@@ -52,7 +56,9 @@ def test_deny(self):
 def test_not_applicable(self):
     lRange = self.RangeNotAppl.split(",")
     lResourceId = get_resource_id(self, lRange)
-    lEndpoint = self.EndpointList[0]
+    lThreadId = grinder.threadNumber
+    idx = lThreadId % len(self.EndpointList)
+    lEndpoint = self.EndpointList[idx]
     lMethodInfo = "test_not_applicable - resourceid=[%s]" % lResourceId
     log.debug("START %s" % lMethodInfo)
     lResponse = do_test(lEndpoint, self.CaDirname, self.ClientCert, self.ClientKey, self.ClientPasswd, self.ProxyPath, lResourceId, self.ActionId)
