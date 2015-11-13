@@ -36,5 +36,5 @@ set -x
 
 pap-admin add-policies-from-file $policyfile
 
-/etc/init.d/argus-pepd clearcache
-/etc/init.d/argus-pdp reloadpolicy
+pepdctl clearResponseCache
+pdpctl reloadPolicy
