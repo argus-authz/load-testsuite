@@ -22,8 +22,11 @@ For configuring load test, edit the file _test.properties_. Basically you need t
  
 
 ## Run
-For execute the load test, run the shell script:
+Before run the test, create a proxy certificate. For example:
+```bash
+$ voms-proxy-init --voms test.vo --cert user_cert/test0.cert.pem --key user_cert/test0.key.pem
+```
+Then execute the load test, running the shell script:
 ```bash
 $ ./run.sh
 ```
-
