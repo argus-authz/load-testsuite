@@ -3,6 +3,7 @@ A load testsuite for Argus based on Grinder
 
 ## Synopsis
 This load test suite provides two tests:
+
 1. Authorize test
 
    Each run execute three authorize request: the first expects _Permit_ as response value, the second one expects _Deny_, the last expects _Not Applicable_.
