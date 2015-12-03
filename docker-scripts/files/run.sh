@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 REPO_BRANCH="${REPO_BRANCH:-master}"
 PROXY_VO=${PROXY_VO:-test.vo}
 
@@ -13,6 +15,6 @@ pushd /home/tester/load-testsuite
 git checkout $REPO_BRANCH
 
 echo "Run ..."
-./run.sh
+sh run.sh
 
 echo "Done."
