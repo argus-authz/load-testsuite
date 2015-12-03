@@ -33,12 +33,12 @@ $ ./run.sh
 ```
 
 ## Run with Docker
-This testsuite provides a Docker image for run the load tests. All the needed files are located in docker-scripts folder.
+This testsuite provides a Docker image for run the load tests. All the needed files are located in _docker-scripts_ folder.
 First, build the new image:
 ```bash
 $ ./build-image.sh
 ```
-This create a new image, named _italiangrid/argus-load-testsuite_ in the host local image repository.
+This shell script creates a new docker image, named _italiangrid/argus-load-testsuite_ in the local image repository.
 Then run the container:
 ```bash
 $ docker run italiangrid/argus-load-testsuite:latest
@@ -48,14 +48,20 @@ For example:
 ```bash
 $ docker run -v ~/test.properties:/tmp/test.properties -e REPO_BRANCH="feature/ISSUE-1" -e PROCESS=1 -e THREADS=1 -e RUNS=1 -e TEST_PROP_FILE=/tmp/test.properties italiangrid/argus-load-testsuite:latest
 ```
+When customize the _properties_ file, pay attention to _grinder.script_ option. Remember that load-testsuite is located in _/home/tester/load-testsuite_, so the use of asbolute path is recommanded.
+
 ##### Available environment variables
  
-| Variable    | Default | Meaning |
-| ----------- | ------- | ------- |
-| REPO_BRANCH | master  | Git branch to checkout |
-| PROCESS     | 10      | Number of process to run |
-| THREADS     | 10      | Number of thread for each process |
-| RUNS        | 100     | How many times iterate the test |
-| TEST\_PROP\_FILE | argus/pepd/test.properties | Test properties file |
- 
- 
+| Variable         | Default                           | Meaning |
+| ---------------- | --------------------------------- | ------- |
+| REPO_BRANCH      | master                            | Git branch to checkout |
+| PROCESS          | 10                                | Number of process to run |
+| THREADS          | 10                                | Number of thread for each process |
+| RUNS             | 100                               | How many times iterate the test |
+| TEST\_PROP\_FILE | argus/pepd/test.properties        | Test properties file |
+| USE\_CONSOLE     | false                             | Use Grinder console for manage load test |
+| CONSOLE\_HOST    | localhost                         | Hostname where Grinder console is running |
+| PROXY\_VO        | test.vo                           | VO used for generate proxy certificate |
+| USER\_CERT       | /home/tester/.globus/usercert.pem | User public key path | 
+| USER\_KEY        | /home/tester/.globus/userkey.pem  | User private key path |
+
