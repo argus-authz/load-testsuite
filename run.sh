@@ -1,12 +1,12 @@
 #!/bin/bash
 
-export GRINDER_PROCESSES=10
-export GRINDER_THREADS=10
-export GRINDER_USE_CONSOLE=false
-export GRINDER_CONSOLE_HOST=localhost
-export GRINDER_RUNS=100
+export GRINDER_PROCESSES=${PROCESS:-10}"
+export GRINDER_THREADS=${THREADS-10}
+export GRINDER_USE_CONSOLE=${USE_CONSOLE-false}
+export GRINDER_CONSOLE_HOST=${CONSOLE_HOST-localhost}
+export GRINDER_RUNS=${RUNS-100}
 
-TEST="./argus/pepd/test.properties"
+TEST=${TEST_PROP_FILE:-"./argus/pepd/test.properties"}
 
 echo "Test: $TEST"
 echo "Processes: $GRINDER_PROCESSES"
