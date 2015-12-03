@@ -50,12 +50,12 @@ $ docker run -v ~/test.properties:/tmp/test.properties -e REPO_BRANCH="feature/I
 ```
  ##### Available environment variables
  
- | Variable    | Default | Meaning |
- | ----------- | ------- | ------- |
- | REPO_BRANCH | master  | Git branch to checkout |
- | PROCESS     | 10      | Number of process to run |
- | THREADS     | 10      | Number of thread for each process |
- | RUNS        | 100     | How many times iterate the test |
- | TEST_PROP_FILE | argus/pepd/test.properties | Test properties file |
+| Variable    | Default | Meaning |
+| ----------- | ------- | ------- |
+| REPO_BRANCH | master  | Git branch to checkout |
+| PROCESS     | 10      | Number of process to run |
+| THREADS     | 10      | Number of thread for each process |
+| RUNS        | 100     | How many times iterate the test |
+| TEST\_PROP\_FILE | argus/pepd/test.properties | Test properties file |
  
  
