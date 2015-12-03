@@ -18,14 +18,24 @@ For configuring load test, edit the file _test.properties_. Basically you need t
  * one or more PEPD endpoints;
  * a resource id
  * a permit range, a deny range and a not applicable range
- * a action id
+ * an action id
  * which test you want run 
  
+Values specified in the properties file must be coherent with the policies loaded in the Argus deployment. An example for load some policy is provided within this testsuite in _bin/setup\_argus.sh_ shell script.
 
 ## Run manually
+For run the load testsuite, on the client host must be installed:
+
+ * Java Virtual Machine
+ * [The Grinder](http://grinder.sourceforge.net/g3/getting-started.html)
+ 
 Before run the test, create a proxy certificate. For example:
 ```bash
 $ voms-proxy-init --voms test.vo --cert user_cert/test0.cert.pem --key user_cert/test0.key.pem
+```
+Export an environment variable with the proxy location:
+```bash
+$ export X509_USER_PROXY=/tmp/x509up_u`id -u`
 ```
 Then execute the load test, running the shell script:
 ```bash
