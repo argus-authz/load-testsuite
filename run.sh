@@ -18,4 +18,4 @@ echo "Removing logs"
 rm -f log/*
 ./bin/runAgent.sh $TEST
 
-tail log/*.log
+tail -n15 log/*.log
