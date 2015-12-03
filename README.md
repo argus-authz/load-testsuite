@@ -48,7 +48,7 @@ For example:
 ```bash
 $ docker run -v ~/test.properties:/tmp/test.properties -e REPO_BRANCH="feature/ISSUE-1" -e PROCESS=1 -e THREADS=1 -e RUNS=1 -e TEST_PROP_FILE=/tmp/test.properties italiangrid/argus-load-testsuite:latest
 ```
- ##### Available environment variables
+##### Available environment variables
  
 | Variable    | Default | Meaning |
 | ----------- | ------- | ------- |
