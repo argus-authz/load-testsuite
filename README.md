@@ -43,7 +43,7 @@ $ ./run.sh
 ```
 
 ## Run with Docker
-This testsuite provides a Docker image for run the load tests. All the needed files are located in _docker-scripts_ folder.
+This testsuite provides a Docker image for run the load tests. All the needed files are located in _docker_ folder.
 First, build the new image:
 ```bash
 $ ./build-image.sh
