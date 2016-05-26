@@ -28,6 +28,12 @@ For run the load testsuite, on the client host must be installed:
 
  * Java Virtual Machine
  * [The Grinder](http://grinder.sourceforge.net/g3/getting-started.html)
+ * Argus Java API
+ 
+First, install dependencies:
+```bash
+# yum install java-1.8.0-openjdk argus-pep-api-java argus-pep-common
+```
  
 Before run the test, create a proxy certificate. For example:
 ```bash
@@ -58,7 +64,7 @@ For example:
 ```bash
 $ docker run -v ~/test.properties:/tmp/test.properties -e REPO_BRANCH="feature/ISSUE-1" -e PROCESS=1 -e THREADS=1 -e RUNS=1 -e TEST_PROP_FILE=/tmp/test.properties italiangrid/argus-load-testsuite:latest
 ```
-When customize the _properties_ file, pay attention to _grinder.script_ option. Remember that load-testsuite is located in _/home/tester/load-testsuite_, so the use of asbolute path is recommanded.
+When customize the _properties_ file, pay attention to _grinder.script_ option. Remember that load-testsuite is located in _/home/tester/load-testsuite_, so the use of absolute path is recommended.
 
 ##### Available environment variables
  

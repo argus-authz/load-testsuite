@@ -12,67 +12,67 @@ from random import randint
 log = grinder.logger
 props = grinder.getProperties()
 
-def not_null(pLabel, pValue):
-    test = (pValue is None) or (pValue is not None and pValue == "")
+def not_null(label, value):
+    test = (label is None) or (value is not None and value == "")
     if test:
-        raise Exception("%s is empty" % pLabel)
+        raise Exception("%s is empty" % label)
 
-def check_result(pValue, pExpected):
-    if pValue != pExpected:
-        msg = "Result value mismatch. Obtained [%s] instead of [%s]" % (pValue, pExpected)
+def check_result(value, expected):
+    if value != expected:
+        msg = "Result value mismatch. Obtained [%s] instead of [%s]" % (value, expected)
         raise Exception(msg)
     
-def get_resource_id(self, lRange):
-    lRand = randint(int(lRange[0]), int(lRange[1]))
-    lResourceId = "%s%03d" % (self.ResourceId, lRand)
-    return lResourceId
+def get_resource_id(self, id_range):
+    rand = randint(int(id_range[0]), int(id_range[1]))
+    resource_id = "%s%03d" % (self.resource_id, rand)
+    return resource_id
 
-def get_endpoint(self, pThreadId):
-    idx = pThreadId % len(self.EndpointList)
-    lEndpoint = self.EndpointList[idx]
-    return lEndpoint
+def get_endpoint(self, thread_id):
+    idx = thread_id % len(self.endpoint_list)
+    endpoint = self.endpoint_list[idx]
+    return endpoint
 
-def create_client(pEndpoint, pCaDirname, pClientCert, pClientKey, pClientPasswd):
-    lMethodInfo = "create_client - endpoint=[%s] cert=[%s] key=[%s]" % (pEndpoint, pClientCert, pClientKey)
-    log.debug("START %s" % lMethodInfo)
-    lConfig = PEPClientConfiguration()
-    lConfig.addPEPDaemonEndpoint(pEndpoint)
-    lConfig.setTrustMaterial(pCaDirname)
-    lConfig.setKeyMaterial(pClientCert, pClientKey, pClientPasswd)
-    lPepClient= PEPClient(lConfig)
-    log.debug("END %s" % lMethodInfo)
-    return lPepClient
+def create_client(endpoint, ca_dirname, client_cert, client_key, client_passwd):
+    method_info = "create_client - endpoint=[%s] cert=[%s] key=[%s]" % (endpoint, client_cert, client_key)
+    log.debug("START %s" % method_info)
+    config = PEPClientConfiguration()
+    config.addPEPDaemonEndpoint(endpoint)
+    config.setTrustMaterial(ca_dirname)
+    config.setKeyMaterial(client_cert, client_key, client_passwd)
+    pep_client = PEPClient(config)
+    log.debug("END %s" % method_info)
+    return pep_client
 
-def get_user_cert(pProxyPath):
-    lMethodInfo = "ger_user_cert - proxypath=[%s]" % pProxyPath
-    log.debug("START %s" % lMethodInfo)
-    lReader = PEMFileReader()
-    lCerts = lReader.readCertificates(pProxyPath)
-    log.debug("END %s" % lMethodInfo)
-    return lCerts
+def get_user_cert(proxy_path, proxy_passwd):
+    method_info = "ger_user_cert - proxypath=[%s]" % proxy_path
+    log.debug("START %s" % method_info)
+    reader = PEMFileReader()
+    certs = reader.readProxyCertificates(proxy_path, proxy_passwd)
+    log.debug("END %s" % method_info)
+    return certs
 
-def create_request(pUserCerts, pResourceId, pActionId):
-    lMethodInfo = "create_request - resourceid=[%s] actionid=[%s]" % (pResourceId, pActionId)
-    log.debug("START %s" % lMethodInfo)
-    lProfile = CommonXACMLAuthorizationProfile.getInstance()
-    lRequest = lProfile.createRequest(pUserCerts, pResourceId, pActionId)
-    log.debug("END %s" % lMethodInfo)
-    return lRequest
+def create_request(user_certs, resource_id, action_id):
+    method_info = "create_request - resourceid=[%s] actionid=[%s]" % (resource_id, action_id)
+    log.debug("START %s" % method_info)
+    profile = CommonXACMLAuthorizationProfile.getInstance()
+    request = profile.createRequest(user_certs, resource_id, action_id)
+    log.debug("END %s" % method_info)
+    return request
 
 def load_props(self):
-    lMethodInfo = "load_props"
-    log.debug("START %s" % lMethodInfo)
-    self.CaDirname = props["common.cadirname"]
-    self.ClientCert = props["common.clientcert"]
-    self.ClientKey = props["common.clientkey"]
-    self.ClientPasswd = props["common.clientpasswd"]
-    self.Endpoints = props["common.pepd.endpoints"]
-    self.EndpointList = self.Endpoints.split()
-    self.ResourceId = props["common.pepd.resourceid"]
-    self.RangePermit = props["common.pepd.resourceid.range.permit"]
-    self.RangeDeny = props["common.pepd.resourceid.range.deny"]
-    self.RangeNotAppl = props["common.pepd.resourceid.range.notappl"]
-    self.ActionId = props["common.pepd.actionid"]
+    method_info = "load_props"
+    log.debug("START %s" % method_info)
+    self.ca_dirname = props["common.cadirname"]
+    self.client_cert = props["common.clientcert"]
+    self.client_key = props["common.clientkey"]
+    self.client_passwd = props["common.clientpasswd"]
+    self.endpoints = props["common.pepd.endpoints"]
+    self.endpoint_list = self.endpoints.split()
+    self.resource_id = props["common.pepd.resourceid"]
+    self.range_permit = props["common.pepd.resourceid.range.permit"]
+    self.range_deny = props["common.pepd.resourceid.range.deny"]
+    self.range_not_appl = props["common.pepd.resourceid.range.notappl"]
+    self.action_id = props["common.pepd.actionid"]
     uid = os.geteuid()
-    self.ProxyPath = os.getenv('X509_USER_PROXY', "/tmp/x509up_u%s" % uid)
-    log.debug("END %s" % lMethodInfo)
+    self.proxy_path = os.getenv('X509_USER_PROXY', "/tmp/x509up_u%s" % uid)
+    log.debug("END %s" % method_info)

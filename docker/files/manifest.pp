@@ -1,18 +1,25 @@
-include puppet-infn-ca
-include puppet-test-ca
 
-class { 'puppet-java': java_version => 8 }
+$packages = ['voms', 'voms-clients-cpp', 'voms-test-ca', 'argus-pep-api-java', 'argus-pep-common']
 
-$packages = ['curl', 'unzip', 'tar', 'git', 'redhat-lsb', 'wget', 'voms', 'voms-clients', 'voms-test-ca']
+$voms_str = "/C=IT/O=INFN/OU=Host/L=CNAF/CN=vgrid02.cnaf.infn.it
+             /C=IT/O=INFN/CN=INFN Certification Authority"
 
-package { $packages: ensure => installed, }
-
+class { 'puppet-infn-ca': } ->
+class { 'puppet-test-ca': } ->
+file { 'argus-repo':
+  path   => '/etc/yum.repos.d/argus_el7.repo',
+  ensure => file,
+  owner  => root,
+  group  => root,
+  mode   => '0644',
+  source => '/argus_el7.repo';
+} ->
+package { $packages: ensure => latest, } ->
 user { 'tester':
   name       => 'tester',
   ensure     => present,
   managehome => true
-}
-
+} ->
 file {
   '/etc/grid-security/hostcert.pem':
     ensure  => file,
@@ -40,4 +47,20 @@ file {
   '/etc/grid-security/vomsdir/test.vo':
     ensure  => directory,
     require => File['/etc/grid-security/vomsdir'];
+
+  '/etc/vomses/test.vo-vgrid02.cnaf.infn.it':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => '"test.vo" "vgrid02.cnaf.infn.it" "15000" "/C=IT/O=INFN/OU=Host/L=CNAF/CN=vgrid02.cnaf.infn.it" "test.vo" "24"',
+    require => File['/etc/vomses'];
+
+  '/etc/grid-security/vomsdir/test.vo/vgrid02.cnaf.infn.it.lsc':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "$voms_str",
+    require => File['/etc/grid-security/vomsdir/test.vo'];
 }

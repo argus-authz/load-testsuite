@@ -6,16 +6,6 @@ CERT_DIR="/usr/share/igi-test-ca"
 PROXY_USER=${PROXY_USER:-test0}
 PROXY_VO=${PROXY_VO:-test.vo}
 
-rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
-
-yum update -y && yum  install -y puppet git yum-plugin-protectbase yum-plugin-priorities yum-utils
-
-rpm -ivh http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm
-
-puppet module install --force puppetlabs-stdlib
-puppet module install --force puppetlabs-java
-puppet module install --force maestrodev-wget
-
 git clone git://github.com/cnaf/ci-puppet-modules.git /opt/ci-puppet-modules
 
 puppet apply --modulepath=/opt/ci-puppet-modules/modules:/etc/puppet/modules /manifest.pp
@@ -38,7 +28,5 @@ cp $CERT_DIR/$PROXY_USER.key.pem /home/tester/.globus/userkey.pem
 chmod 400 /home/tester/.globus/userkey.pem
 chown -R tester:tester /home/tester/.globus
 
-echo '"test.vo" "vgrid02.cnaf.infn.it" "15004" "/C=IT/O=INFN/OU=Host/CN=vgrid02.cnaf.infn.it" "test.vo"' > /etc/grid-security/vomsdir/test.vo/vgrid02.cnaf.infn.it.lsc
-echo '"test.vo" "vgrid02.cnaf.infn.it" "15000" "/C=IT/O=INFN/OU=Host/L=CNAF/CN=vgrid02.cnaf.infn.it" "test.vo" "24"' > /etc/vomses/test.vo-vgrid02.cnaf.infn.it
 
 
