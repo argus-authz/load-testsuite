@@ -16,40 +16,40 @@ props = grinder.getProperties()
 TESTID = 201
 
 def parallel_test(self):
-    lRange = self.RangePermit.split(",")
-    lResourceId = "%s%03d" % (self.ResourceId, int(lRange[0]))
-    lEndpoint = get_endpoint(self, grinder.threadNumber)
-    lMethodInfo = "parallel_test - resourceid=[%s] actionid=[%s] endpoint=[%s]" % (lResourceId, self.ActionId, lEndpoint)
-    log.debug("START %s" % lMethodInfo)
-    lPepClient = create_client(lEndpoint, self.CaDirname, self.ClientCert, self.ClientKey, self.ClientPasswd)
-    lCerts = get_user_cert(self.ProxyPath)
-    lRequest = create_request(lCerts, lResourceId, self.ActionId)
-    self.RequestBarrier.await()
-    lResponse = lPepClient.authorize(lRequest)
-    lResult = lResponse.getResults().get(0)
-    lDecision = lResult.getDecision()
-    check_result(lDecision, Result.DECISION_PERMIT)
-    log.debug("END %s" % lMethodInfo)
+    id_range = self.range_permit.split(",")
+    resource_id = "%s%03d" % (self.resource_id, int(id_range[0]))
+    endpoint = get_endpoint(self, grinder.threadNumber)
+    method_info = "parallel_test - resourceid=[%s] actionid=[%s] endpoint=[%s]" % (resource_id, self.action_id, endpoint)
+    log.debug("START %s" % method_info)
+    pep_client = create_client(endpoint, self.ca_dirname, self.client_cert, self.client_key, self.client_passwd)
+    certs = get_user_cert(self.proxy_path, self.client_passwd)
+    request = create_request(certs, resource_id, self.action_id)
+    self.request_barrier.await()
+    response = pep_client.authorize(request)
+    result = response.getResults().get(0)
+    decision = result.getDecision()
+    check_result(decision, Result.DECISION_PERMIT)
+    log.debug("END %s" % method_info)
 
 class TestRunner:
     def __init__(self):
-        lMethodInfo = "init"
-        log.debug("START %s" % lMethodInfo)
+        method_info = "init"
+        log.debug("START %s" % method_info)
         load_props(self)
-        self.RequestBarrier = grinder.barrier("Request")
-        log.debug("END %s" % lMethodInfo)
+        self.request_barrier = grinder.barrier("Request")
+        log.debug("END %s" % method_info)
         
     def __call__(self):
-        lMethodInfo = "call"
-        log.debug("START %s" % lMethodInfo)
+        method_info = "call"
+        log.debug("START %s" % method_info)
         
         try:
-            lTest = Test(TESTID, "Argus PEPD parallel test")
-            lTest.record(parallel_test)
+            test = Test(TESTID, "Argus PEPD parallel test")
+            test.record(parallel_test)
             
             parallel_test(self)
             
         except Exception, e:
             log.error("Error executing PEPD test: %s" % traceback.format_exc())
             
-        log.debug("END %s" % lMethodInfo)
+        log.debug("END %s" % method_info)

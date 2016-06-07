@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x
 
-LIBS=$(ls -1 lib/*.jar | tr '\n' ':')
+LIBS=$(ls -1 lib/*.jar /usr/share/java/argus-*.jar | tr '\n' ':')
 GRINDER_HOME="${GRINDER_HOME:-/opt/grinder-3.11}"
 CLASSPATH="lib:$LIBS$GRINDER_HOME/lib/grinder.jar"
 THIS_DIR="$( cd $( dirname ${BASH_SOURCE[0]}) && pwd )"
