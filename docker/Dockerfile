@@ -2,7 +2,9 @@ FROM docker.io/centos:latest
 
 ## Layer: base
 RUN rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
-RUN yum update -y && yum  install -y puppet git curl unzip tar git redhat-lsb wget java-1.8.0-openjdk epel-release
+RUN yum update -y && \
+    yum install -y puppet git curl unzip tar git redhat-lsb wget java-1.8.0-openjdk epel-release && \
+    yum clean all
 RUN puppet module install --force puppetlabs-stdlib && \
 	puppet module install --force puppetlabs-java && \
 	puppet module install --force maestrodev-wget

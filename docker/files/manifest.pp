@@ -1,14 +1,14 @@
 
 $packages = ['voms', 'voms-clients-cpp', 'voms-test-ca', 'argus-pep-api-java', 'argus-pep-common']
 
-$voms_str = "/C=IT/O=INFN/OU=Host/L=CNAF/CN=vgrid02.cnaf.infn.it
-             /C=IT/O=INFN/CN=INFN Certification Authority"
+$voms_str = '/C=IT/O=INFN/OU=Host/L=CNAF/CN=vgrid02.cnaf.infn.it
+             /C=IT/O=INFN/CN=INFN Certification Authority'
 
-class { 'puppet-infn-ca': } ->
-class { 'puppet-test-ca': } ->
+class { 'mwdevel_infn_ca': } ->
+class { 'mwdevel_test_ca': } ->
 file { 'argus-repo':
-  path   => '/etc/yum.repos.d/argus_el7.repo',
   ensure => file,
+  path   => '/etc/yum.repos.d/argus_el7.repo',
   owner  => root,
   group  => root,
   mode   => '0644',
@@ -16,8 +16,8 @@ file { 'argus-repo':
 } ->
 package { $packages: ensure => latest, } ->
 user { 'tester':
-  name       => 'tester',
   ensure     => present,
+  name       => 'tester',
   managehome => true
 } ->
 file {
@@ -27,7 +27,7 @@ file {
     group   => 'root',
     mode    => '0644',
     require => Package['voms'],
-    source  => "/dev_local_io.cert.pem";
+    source  => '/dev_local_io.cert.pem';
 
   '/etc/grid-security/hostkey.pem':
     ensure  => file,
@@ -35,7 +35,7 @@ file {
     group   => 'root',
     mode    => '0400',
     require => Package['voms'],
-    source  => "/dev_local_io.key.pem";
+    source  => '/dev_local_io.key.pem';
 
   '/etc/vomses':
     ensure => directory;
@@ -61,6 +61,6 @@ file {
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => "$voms_str",
+    content => $voms_str,
     require => File['/etc/grid-security/vomsdir/test.vo'];
 }
