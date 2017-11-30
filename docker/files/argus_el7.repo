@@ -1,6 +1,6 @@
 [Argus-EL7]
 name=Argus-EL7
-baseurl=http://radiohead.cnaf.infn.it:9999/view/All/job/trigger-pkg.argus/BUILD_PLATFORM=centos7/lastSuccessfulBuild/artifact/repo
+baseurl=https://jenkins.cloud.ba.infn.it/job/argus-nightly/lastStableBuild/artifact/el7/RPMS/
 #baseurl=file:///tmp/local_repo/repository/el7/repo
 enabled=1
 gpgcheck=0
