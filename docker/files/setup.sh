@@ -20,6 +20,9 @@ cat /etc/profile.d/x509_user_proxy.sh
 echo 'export GRINDER_HOME="/opt/grinder-3.11"'>/etc/profile.d/grinder.sh
 cat /etc/profile.d/grinder.sh
 
+echo "Create tester user ..."
+useradd tester
+
 echo "Create proxy certificate ..."
 mkdir /home/tester/.globus
 cp $CERT_DIR/$PROXY_USER.cert.pem /home/tester/.globus/usercert.pem

@@ -1,4 +1,4 @@
-FROM docker.io/centos:latest
+FROM centos:7
 
 ## Layer: base
 RUN rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm
